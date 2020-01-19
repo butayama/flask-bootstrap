@@ -3,22 +3,22 @@ from flask_bootstrap import Bootstrap
 from flask_appconfig import AppConfig
 from flask_wtf import Form, RecaptchaField
 from flask_wtf.file import FileField
-from wtforms import TextField, HiddenField, ValidationError, RadioField,\
+from wtforms import StringField, HiddenField, ValidationError, RadioField,\
     BooleanField, SubmitField, IntegerField, FormField, validators
-from wtforms.validators import Required
+from wtforms.validators import DataRequired
 
 
 # straight from the wtforms docs:
 class TelephoneForm(Form):
     country_code = IntegerField('Country Code', [validators.required()])
     area_code = IntegerField('Area Code/Exchange', [validators.required()])
-    number = TextField('Number')
+    number = StringField('Number')
 
 
 class ExampleForm(Form):
-    field1 = TextField('First Field', description='This is field one.')
-    field2 = TextField('Second Field', description='This is field two.',
-                       validators=[Required()])
+    field1 = StringField('First Field', description='This is field one.')
+    field2 = StringField('Second Field', description='This is field two.',
+                       validators=[DataRequired()])
     hidden_field = HiddenField('You cannot see this', description='Nope')
     recaptcha = RecaptchaField('A sample recaptcha field')
     radio_field = RadioField('This is a radio field', choices=[
@@ -39,7 +39,6 @@ class ExampleForm(Form):
     ff = FileField('Sample upload')
 
     submit_button = SubmitField('Submit Form')
-
 
     def validate_hidden_field(form, field):
         raise ValidationError('Always wrong')

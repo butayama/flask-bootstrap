@@ -24,7 +24,7 @@ setup(
     install_requires=[
         'Flask>=0.8',
         'dominate',
-        'visitor',
+        'visitor', 'wtforms'
     ],
     classifiers=[
         'Environment :: Web Environment', 'Intended Audience :: Developers',
