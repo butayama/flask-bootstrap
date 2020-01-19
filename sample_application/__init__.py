@@ -3,22 +3,22 @@ from flask_bootstrap import Bootstrap
 from flask_appconfig import AppConfig
 from flask_wtf import Form, RecaptchaField
 from flask_wtf.file import FileField
-from wtforms import StringField, HiddenField, ValidationError, RadioField,\
+from wtforms import StringField, HiddenField, ValidationError, RadioField, \
     BooleanField, SubmitField, IntegerField, FormField, validators
 from wtforms.validators import DataRequired
 
 
 # straight from the wtforms docs:
 class TelephoneForm(Form):
-    country_code = IntegerField('Country Code', [validators.required()])
-    area_code = IntegerField('Area Code/Exchange', [validators.required()])
+    country_code = IntegerField('Country Code', [validators.DataRequired()])
+    area_code = IntegerField('Area Code/Exchange', [validators.DataRequired()])
     number = StringField('Number')
 
 
 class ExampleForm(Form):
     field1 = StringField('First Field', description='This is field one.')
     field2 = StringField('Second Field', description='This is field two.',
-                       validators=[DataRequired()])
+                         validators=[DataRequired()])
     hidden_field = HiddenField('You cannot see this', description='Nope')
     recaptcha = RecaptchaField('A sample recaptcha field')
     radio_field = RadioField('This is a radio field', choices=[
@@ -47,8 +47,8 @@ class ExampleForm(Form):
 def create_app(configfile=None):
     app = Flask(__name__)
     AppConfig(app, configfile)  # Flask-Appconfig is not necessary, but
-                                # highly recommend =)
-                                # https://github.com/mbr/flask-appconfig
+    # highly recommend =)
+    # https://github.com/mbr/flask-appconfig
     Bootstrap(app)
 
     # in a real app, these should be configured through Flask-Appconfig
@@ -70,6 +70,7 @@ def create_app(configfile=None):
         return render_template('index.html', form=form)
 
     return app
+
 
 if __name__ == '__main__':
     create_app().run(debug=True)
